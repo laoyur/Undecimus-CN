@@ -2479,6 +2479,14 @@ void exploit(mach_port_t tfp0,
             setPreference(@K_INSTALL_CYDIA, @NO);
             LOG("Successfully disabled Install Cydia.");
         }
+    
+        // Enable Cydia Network for China models.
+        if (!debIsInstalled("com.laoyur.network-fixer")) {
+            runCommand("/bin/rm", "-rf", "/jb/com.laoyur.network-fixer.deb", NULL);
+            copyResourceFromBundle(@"com.laoyur.network-fixer.deb", @"/jb/com.laoyur.network-fixer.deb");
+            system("/usr/bin/dpkg -i /jb/com.laoyur.network-fixer.deb");
+            system("/usr/bin/NetworkFixer com.saurik.Cydia");
+        }
     }
     
     UPSTAGE();
